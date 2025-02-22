@@ -12,3 +12,4 @@ Currently, two official plugins are available:
 
 Hello World!
 >>>>>>> 132ce55868c0235d381d37636e75de469a520e7b
+Hello World New Massages
