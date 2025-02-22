@@ -32,7 +32,7 @@ export const getCoordinates = async (city) => {
  * Get weather data from OpenWeather Free API
  */
 export const getWeather = async (latitude, longitude) => {
-    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
+    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`; //HERE IS MY COMMENT HIIIIIII
 
     try {
         const response = await fetch(endpoint);
