@@ -33,7 +33,7 @@ export const getCoordinates = async (city) => {
  */
 export const getWeather = async (latitude, longitude) => {
     const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`; //HERE IS MY COMMENT HIIIIIII
-
+     // I see your comment but I can not take off andgo back to previous version 
     try {
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
