@@ -1,73 +1,52 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import {
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Alert,
-  Box
-} from '@mui/material';
-import "../styles/Login.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import "../styles/Register.css"; // ✅ Import classic CSS
 
-export const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const { signup } = useAuth();
-  const navigate = useNavigate();
+const Register = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const auth = getAuth(); // ✅ Get Firebase auth instance
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setError('');
-      await signup(email, password);
-      navigate('/');
-    } catch (err) {
-      setError('Failed to create an account');
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
 
-  return (
-    <Box className="auth-page">
-    <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto' }}>
-      <Typography variant="h5" component="h2" gutterBottom>
-        Register
-      </Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          fullWidth
-          label="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          margin="normal"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3 }}
-        >
-          Register
-        </Button>
-      </Box>
-    </Paper>
-    </Box>
-  );
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            navigate("/"); // ✅ Redirect to homepage after successful registration
+        } catch (err) {
+            setError("Failed to create an account");
+        }
+    };
+
+    return (
+        <div className="register-container">
+            <h2>Register</h2>
+            {error && <p className="error-message">{error}</p>}
+            <form onSubmit={handleSubmit} className="register-form">
+                <label>Email:</label>
+                <input 
+                    type="email" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    required 
+                />
+
+                <label>Password:</label>
+                <input 
+                    type="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    required 
+                />
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    );
 };
-
 
 export default Register;

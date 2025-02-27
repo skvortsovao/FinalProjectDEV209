@@ -1,15 +1,15 @@
-const API_KEY = process.env.REACT_APP_API_KEY_ENV;  // My OpenWeather API key
-const GEO_BASE_URL = process.env.REACT_APP_GEO_BASE_URL_ENV; // taking geo coordinates
-const WEATHER_BASE_URL = process.env.REACT_APP_WEATHER_BASE_URL_ENV;;  // Free API
+const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
-
-
+const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct";
+const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+const GOOGLE_STREET_VIEW_BASE_URL = "https://maps.googleapis.com/maps/api/streetview";
 
 /**
  * Get latitude and longitude from a city name using OpenWeather Geocoding API
  */
 export const getCoordinates = async (city) => {
-    const endpoint = `${GEO_BASE_URL}?q=${city}&limit=1&appid=${API_KEY}`;
+    const endpoint = `${GEO_BASE_URL}?q=${city}&limit=1&appid=${OPENWEATHER_API_KEY}`;
 
     try {
         console.log(`Fetching coordinates for city: ${city}`);  // Debugging
@@ -35,7 +35,12 @@ export const getCoordinates = async (city) => {
  * Get weather data from OpenWeather Free API
  */
 export const getWeather = async (latitude, longitude) => {
-    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
+    if (!OPENWEATHER_API_KEY) {
+        console.error("Missing OpenWeather API Key!");
+        return null;
+    }
+
+    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${OPENWEATHER_API_KEY}`;
 
     try {
         const response = await fetch(endpoint);
@@ -48,14 +53,15 @@ export const getWeather = async (latitude, longitude) => {
     }
 };
 
-
-const GOOGLE_STREET_VIEW_BASE_URL = process.env.REACT_APP_GOOGLE_STREET_VIEW_BASE_URL_ENV;
-const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY_ENV;
-
 /**
  * Get 4 Street View images for a city (Front, Back, Left, Right)
  */
 export const getStreetViewImages = async (city) => {
+    if (!GOOGLE_API_KEY) {
+        console.error("Missing Google API Key!");
+        return [];
+    }
+
     try {
         const coordinates = await getCoordinates(city);
         if (!coordinates) throw new Error("Coordinates not found");
@@ -75,55 +81,3 @@ export const getStreetViewImages = async (city) => {
         return [];
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
