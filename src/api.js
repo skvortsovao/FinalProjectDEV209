@@ -2,6 +2,9 @@ const API_KEY = "6b1fde950d44075d8b55708174adb5c7";  // My OpenWeather API key
 const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // taking geo coordinates
 const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather";  // Free API
 
+
+
+
 /**
  * Get latitude and longitude from a city name using OpenWeather Geocoding API
  */
@@ -44,6 +47,52 @@ export const getWeather = async (latitude, longitude) => {
         return null;
     }
 };
+
+
+const GOOGLE_STREET_VIEW_BASE_URL = "https://maps.googleapis.com/maps/api/streetview";
+const GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY";
+
+/**
+ * Get 4 Street View images for a city (Front, Back, Left, Right)
+ */
+export const getStreetViewImages = async (city) => {
+    try {
+        const coordinates = await getCoordinates(city);
+        if (!coordinates) throw new Error("Coordinates not found");
+
+        const { lat, lon } = coordinates;
+
+        // Generate 4 views: Front (0°), Right (90°), Back (180°), Left (270°)
+        const headings = [0, 90, 180, 270];
+        const imageUrls = headings.map(heading => 
+            `${GOOGLE_STREET_VIEW_BASE_URL}?size=1024x768&location=${lat},${lon}&heading=${heading}&key=${GOOGLE_API_KEY}`
+        );
+
+        console.log("Generated Street View URLs:", imageUrls);
+        return imageUrls;
+    } catch (error) {
+        console.error("Error fetching Street View images:", error);
+        return [];
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
