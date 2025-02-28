@@ -2,20 +2,17 @@ const API_KEY = "6b1fde950d44075d8b55708174adb5c7";  // My OpenWeather API key
 const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // taking geo coordinates
 const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather";  // Free API
 
-/**
- * Get latitude and longitude from a city name using OpenWeather Geocoding API
- */
 export const getCoordinates = async (city) => {
     const endpoint = `${GEO_BASE_URL}?q=${city}&limit=1&appid=${API_KEY}`;
 
     try {
-        console.log(`Fetching coordinates for city: ${city}`);  // Debugging
+        console.log(`Fetching coordinates for city: ${city}`); 
 
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`Failed to fetch coordinates: ${response.status}`);
 
         const data = await response.json();
-        console.log("Geocoding API response:", data);  // Debugging
+        console.log("Geocoding API response:", data);  
 
         if (!data || data.length === 0) {
             throw new Error("City not found");
@@ -28,12 +25,9 @@ export const getCoordinates = async (city) => {
     }
 };
 
-/**
- * Get weather data from OpenWeather Free API
- */
 export const getWeather = async (latitude, longitude) => {
-    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`; //HERE IS MY COMMENT HIIIIIII
-     // I see your comment but I can not take off andgo back to previous version 
+    const endpoint = `${WEATHER_BASE_URL}?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`;
+   
     try {
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);

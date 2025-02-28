@@ -1,0 +1,156 @@
+/* General styles for the entire page */
+
+.signin {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Full viewport height */
+    background-image: url("../../public/default.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-direction: column; /* Stacks logo and form vertically */
+    text-align: center; /* Center text inside container */
+}
+.signin::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3); /* Adjust opacity for the haze effect */
+    pointer-events: none; /* Allow interaction with elements below */
+}
+/* Container for the form */
+.form-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px; /* Set a max-width for the form container */
+    margin-top: 20px; /* Space between logo and form */
+}
+
+/* Logo styling */
+.logo {
+    top: 10px;
+    position: absolute;
+    width: 100%; /* Make the logo responsive */
+    max-width: 1000px; /* Limit logo size */
+    margin-bottom: 10px;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+h1, h4 {
+    text-align: center;
+}
+
+/* Input fields and button */
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px; /* Make input field take full width */
+    max-width: 450px; /* Set a max width for the input field */
+    margin: 0 auto;
+    
+}
+
+button {
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width:325px; /* Make button take full width */
+    margin: 10px auto;
+}
+
+
+
+/* Style for the "Sign Up" link */
+.signin_link {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+.signin_link:hover {
+    text-decoration: underline;
+}
+
+/* For error messages */
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    /* Adjust logo size for smaller screens */
+    .logo {
+        max-width: 800px;
+    }
+
+    /* Make the form container full-width with some padding */
+    .form-container {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    /* Input fields should take full width on mobile */
+    input {
+        max-width: 100%;
+    }
+
+    /* Adjust button width for mobile */
+    button {
+        width: 100%;
+    }
+
+    /* Add spacing for smaller screens */
+    .signin {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Make logo even smaller on very small screens */
+    .logo {
+        max-width: 350px;
+    }
+
+    /* Make the form container fit better on very small screens */
+    .form-container {
+        width: 90%;
+        max-width: 320px;
+    }
+
+    /* Adjust button size and padding for very small screens */
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Adjust input field size for small screens */
+    input {
+        font-size: 14px;
+    }
+}
