@@ -1,5 +1,5 @@
-/* Wrapper for proper positioning */
-.login-wrapper {
+/* Wrapper for proper positioning (Used for Both Forms) */
+.form-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,9 +8,9 @@
   position: relative;
 }
 
-/* Updated Login Form */
-.login-container {
-  width: 300px; /* ✅ Form width */
+/* Updated Form Container (Used for Both Forms) */
+.form-container {
+  width: 300px; /* ✅ Standardized width */
   padding: 40px;
   background: white;
   border-radius: 8px;
@@ -19,31 +19,30 @@
 }
 
 /* Updated Form Layout */
-.login-form {
+.form-box {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 /* Labels */
-.login-form label {
+.form-box label {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
 /* Input fields */
-.login-form input {
+.form-box input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
   width: 100%;  /* ✅ Make input full width */
-  max-width: 280px; /* ✅ Ensures consistency */
   box-sizing: border-box;
 }
 
-/* Smaller Login Button */
-.login-form button {
+/* Smaller Form Button */
+.form-box button {
   background-color: #1976d2;
   color: white;
   padding: 10px 20px;
@@ -52,27 +51,26 @@
   font-size: 16px;
   border-radius: 5px;
   margin-top: 10px;
-  width: auto; /* ✅ Button size is now smaller */
-  align-self: center; /* ✅ Aligns button to the left */
+  width: 100%; /* ✅ Ensures button is the same width as inputs */
 }
 
-.login-form button:hover {
+.form-box button:hover {
   background-color: #155a9f;
 }
 
-/* Register link */
-.register-link {
+/* Link under form */
+.form-link {
   margin-top: 10px;
   text-align: center;
   font-size: 14px;
 }
 
-.register-link a {
+.form-link a {
   color: #1976d2;
   text-decoration: none;
   font-weight: bold;
 }
 
-.register-link a:hover {
+.form-link a:hover {
   text-decoration: underline;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import "../styles/Login.css";
+import "../styles/Form.css"; // ✅ Use shared CSS
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -23,12 +23,11 @@ const Login = () => {
     };
 
     return (
-        <div className="login-wrapper">
-            {/* ✅ Centered login form with better width */}
-            <div className="login-container">
+        <div className="form-wrapper">
+            <div className="form-container">
                 <h2>Login</h2>
                 {error && <p className="error-message">{error}</p>}
-                <form onSubmit={handleLogin} className="login-form">
+                <form onSubmit={handleLogin} className="form-box">
                     <label>Email:</label>
                     <input 
                         type="email" 
@@ -48,8 +47,7 @@ const Login = () => {
                     <button type="submit">Login</button>
                 </form>
 
-                {/* ✅ Adjusted register link for better alignment */}
-                <p className="register-link">
+                <p className="form-link">
                     Don't have an account? <Link to="/register">Register here</Link>
                 </p>
             </div>
