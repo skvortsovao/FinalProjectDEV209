@@ -1,25 +1,24 @@
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase"; // ✅ Import `auth` from `firebase.js`
-import { signOut } from "firebase/auth";
-import "../styles/Navbar.css";
+import { Link, useLocation } from "react-router-dom";
+import "../styles/Navbar.css"; // ✅ Import navbar styles
 
 const Navbar = () => {
-    const navigate = useNavigate();
+    const location = useLocation(); // ✅ Get the current route
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            navigate("/login"); // ✅ Redirect to login page after logout
-        } catch (error) {
-            console.error("Failed to log out", error);
-        }
-    };
-
-    console.log("Auth instance:", auth); // ✅ Debugging
+    // ✅ Hide Navbar on Login/Register pages
+    if (location.pathname === "/login" || location.pathname === "/register") {
+        return null;
+    }
 
     return (
         <nav className="navbar">
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            <div className="navbar-container">
+                     
+                <ul className="nav-links">
+                    <li><Link to="/">Look Up Weather</Link></li>
+                    <li><Link to="/pictures">Find Pictures</Link></li>
+                    <li><Link to="/album">My Album</Link></li>
+                </ul>
+            </div>
         </nav>
     );
 };

@@ -1,0 +1,25 @@
+/* button Log out */
+.logout {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* ✅ Ensure button is above other elements */
+}
+
+/* Logout button styling */
+.logout-btn {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    position: relative; /* ✅ Prevents being covered by absolute elements */
+}
+
+/* ✅ Ensure no invisible overlay is blocking clicks */
+.logout-btn:disabled {
+    pointer-events: auto !important; /* ✅ Overrides any accidental disable */
+    opacity: 1 !important;
+}

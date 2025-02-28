@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "../styles/Form.css"; // ✅ Use shared CSS
+import defaultBackground from "../assets/default.jpg";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -23,6 +24,13 @@ const Register = () => {
     };
 
     return (
+        <div style={{
+            backgroundImage: `url(${defaultBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+                                                                       
+        }}>
+
         <div className="form-wrapper">
             <div className="form-container">
                 <h2>Register</h2>
@@ -48,6 +56,7 @@ const Register = () => {
                 </form>
             </div>
         </div>
+     </div>
     );
 };
 

@@ -56,7 +56,7 @@ const Weather = () => {
 
     return (
         <div className="weather-container">
-            <h1>Welcome to Tempix</h1>
+            
 
             {/* ✅ Group input and button in one row */}
             <div className="input-group">
