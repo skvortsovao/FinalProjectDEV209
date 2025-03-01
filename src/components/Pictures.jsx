@@ -1,63 +1,68 @@
 import React, { useState } from "react";
 import "../styles/Pictures.css";
 
-// Fetch images from Pexels API
-export const fetchCityImages = async (city) => {
-  try {
-    const apiKey = import.meta.env.VITE_PEXELS_API_KEY; 
-
-    if (!apiKey) {
-      console.error("Pexels API Key is missing.");
-      return [];
-    }
-
-    const url = `https://api.pexels.com/v1/search?query=${city}&per_page=10`;
-
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.photos || [];
-  } catch (error) {
-    console.error("Error fetching images:", error);
-    return [];
-  }
-};
-
 const Pictures = () => {
-  const [city, setCity] = useState(""); 
+  const [city, setCity] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
 
-  const handleSearch = async () => {
-    setError(null); // Reset errors
+  // Function to fetch place_id from the Node.js server
+  const fetchPlaceId = async (city) => {
+    try {
+      const response = await fetch(`http://localhost:3000/fetch-place-id?city=${city}`);
+      const data = await response.json();
+      if (data.candidates && data.candidates.length > 0) {
+        return data.candidates[0].place_id;
+      } else {
+        throw new Error("No place found for this city.");
+      }
+    } catch (error) {
+      throw new Error("Error fetching place ID: " + error.message);
+    }
+  };
 
+  // Function to fetch photos using the place_id
+  const fetchCityPhotos = async (placeId) => {
+    const apiKey = "AIzaSyBXelX2xErmN30PEAHn8_HaqbN2UPtLxc8";  // Replace with your API key
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=photos&key=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.result && data.result.photos) {
+        const photoUrls = data.result.photos.map(photo => 
+          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${photo.photo_reference}&key=${apiKey}`
+        );
+        setImages(photoUrls);
+      } else {
+        setError("No photos available for this place.");
+        setImages([]);
+      }
+    } catch (error) {
+      setError("Error fetching photos: " + error.message);
+      setImages([]);
+    }
+  };
+
+  // Handle search button click
+  const handleSearch = async () => {
+    setError(null);
     if (!city.trim()) {
       setError("Please enter a city name.");
       return;
     }
 
-    console.log("API Key from .env:", import.meta.env.VITE_PEXELS_API_KEY);
-
-    const fetchedImages = await fetchCityImages(city);
-    if (fetchedImages.length === 0) {
-      setError("No images found. Try another city.");
+    try {
+      const placeId = await fetchPlaceId(city);
+      await fetchCityPhotos(placeId);
+    } catch (error) {
+      setError(error.message);
+      setImages([]);
     }
-    setImages(fetchedImages);
   };
 
   return (
     <div className="pictures-container">
-      <h2>Find Pictures of a City</h2>
-
-      {/* Input field & Search Button */}
       <div className="input-group">
         <input
           type="text"
@@ -70,11 +75,10 @@ const Pictures = () => {
 
       {error && <p className="error-message">{error}</p>}
 
-      {/* Display Images */}
       <div className="image-gallery">
         {images.length > 0 ? (
-          images.map((image) => (
-            <img key={image.id} src={image.src.medium} alt={image.photographer} />
+          images.map((imageUrl, index) => (
+            <img key={index} src={imageUrl} alt={`City photo ${index + 1}`} />
           ))
         ) : (
           !error && <p>Enter a city and click search to see pictures.</p>

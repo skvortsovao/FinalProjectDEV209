@@ -83,7 +83,7 @@ body {
 @media (max-width: 768px) {
   .input-group input,
   .input-group button {
-    width: 60%;
+    width: 50%;
     justify-content: center;
     margin: auto;
   }

@@ -15,6 +15,7 @@ const Layout = () => {
       })
       .catch((error) => console.error("Error signing out: ", error));
   };
+  
 
   return (
     <div className="layout">
