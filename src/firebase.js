@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth"; // Import auth from Firebase
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAQl_Nnbj35BdzpvUAEmkjajDgAZ2o1maM",
-  authDomain: "registration-form-d0053.firebaseapp.com",
-  projectId: "registration-form-d0053",
-  storageBucket: "registration-form-d0053.firebasestorage.app",
-  messagingSenderId: "1013790319776",
-  appId: "1:1013790319776:web:7a833dfbf1960cc38d15c5",
+  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.VITE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,  
 };
 
 // Initialize Firebase

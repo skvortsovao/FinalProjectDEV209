@@ -1,4 +1,4 @@
-const API_KEY = "6b1fde950d44075d8b55708174adb5c7";  // My OpenWeather API key
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;  // My OpenWeather API key
 const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // taking geo coordinates
 const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather";  // Free API
 
