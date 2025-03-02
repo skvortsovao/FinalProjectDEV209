@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getWeather, getCoordinates } from "../api";
 import "../styles/Weather.css"; // Import the Weather.css file
 
-const Weather = () => {
+const Weather = ({ setSelectedCity }) => {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
@@ -30,11 +30,11 @@ const Weather = () => {
     }
 
     setWeatherData(data);
+    setSelectedCity(city); // ✅ Pass city to App.js
   };
 
-  
   const getBackgroundImage = () => {
-    if (!weatherData) return "/default.jpg"; 
+    if (!weatherData) return "/default.jpg";
 
     const condition = weatherData.weather[0].main.toLowerCase();
 
@@ -43,16 +43,15 @@ const Weather = () => {
     if (condition.includes("clear")) return "/sunny.jpg";
     if (condition.includes("snow")) return "/snow.jpg";
 
-    return "/default.jpg"; 
+    return "/default.jpg";
   };
 
   useEffect(() => {
     document.body.style.backgroundImage = `url(${getBackgroundImage()})`;
-  }, [weatherData]);
+  }, [weatherData]); // ✅ This remains unchanged
 
   return (
     <div className="weather-container">
-      {/* Input group for city and button */}
       <div className="input-group">
         <input
           type="text"

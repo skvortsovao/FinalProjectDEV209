@@ -9,27 +9,30 @@ import { auth } from './firebase';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(""); // ✅ Store the selected city
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(user !== null); 
+      setIsAuthenticated(user !== null);
     });
-    return unsubscribe; 
+    return unsubscribe;
   }, []);
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Signin />} />
-        
+
         {/* Only show Layout and nested routes if authenticated */}
         <Route
           path="/layout/*"
           element={isAuthenticated ? <Layout /> : <Signin />}
         >
-          <Route path="weather" element={<Weather />} />
-          <Route path="pictures" element={<Pictures />} />
-          
+          {/* ✅ Pass setSelectedCity to Weather so it updates the city */}
+          <Route path="weather" element={<Weather setSelectedCity={setSelectedCity} />} />
+
+          {/* ✅ Pass the selectedCity to Pictures so it fetches photos for that city */}
+          <Route path="pictures" element={<Pictures city={selectedCity} />} />
         </Route>
       </Routes>
     </Router>
