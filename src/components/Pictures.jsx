@@ -88,25 +88,31 @@ const Pictures = ({ city }) => {
         );
     };
 
-    // ✅ Save selected pictures to Firestore
     const saveToFirebase = async () => {
         if (selectedPhotos.length === 0) {
             alert("No pictures selected!");
             return;
         }
-
+    
+        console.log("📸 Selected Photos Before Saving:", selectedPhotos);
+    
         try {
+            console.log("🛠 Firestore DB Instance:", db);  // ✅ Log Firestore DB
+    
             const albumRef = collection(db, "albums");
-            await addDoc(albumRef, { photos: selectedPhotos });
-            console.log("✅ Saved to Firestore:", selectedPhotos);
+            const docRef = await addDoc(albumRef, { photos: selectedPhotos });
+    
+            console.log("✅ Successfully saved to Firestore:", selectedPhotos);
+            console.log("🔥 Firestore Document ID:", docRef.id);  // ✅ Log document ID
+    
             alert("Saved to My Album!");
-            navigate("/layout/my-album"); // ✅ Navigate after saving
+            navigate("/layout/my-album");
         } catch (error) {
-            console.error("❌ Error saving to Firebase:", error);
-            alert("Error saving pictures.");
+            console.error("❌ Firestore Error:", error.message);
+            alert("Error saving pictures. Check console logs.");
         }
     };
-
+               
     return (
         <div>
             <h2>Photos of {city || "No City Selected"}</h2>
@@ -146,3 +152,5 @@ Pictures.propTypes = {
 };
 
 export default Pictures;
+
+
