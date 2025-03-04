@@ -1,5 +1,64 @@
-.image-gallery img {
-    width: 200px;
-    height: auto;
-    margin: 10px;
-  }
+/* Pictures.css */
+
+/* ✅ Grid container for images */
+.pictures-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 15px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* ✅ Individual picture container */
+.picture-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.3); /* ✅ Transparent background */
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: cursive;
+  backdrop-filter: blur(8px); /* ✅ Glass effect */
+}
+
+/* ✅ Image styling */
+.picture-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2); /* ✅ Transparent image background */
+}
+
+/* ✅ Star button */
+.favorite-button {
+  margin-top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-family: cursive;
+}
+
+/* ✅ Unselected star */
+.favorite-button {
+  color: gray;
+}
+
+/* ✅ Selected (favorite) star */
+.favorite-button.active {
+  color: gold;
+}
+
+/* ✅ Small text below the star */
+.favorite-text {
+  font-size: 12px;
+  color: #333;
+  font-family: cursive;
+  margin-top: 5px;
+  text-align: center;
+  opacity: 0.8; /* ✅ Slight transparency */
+}

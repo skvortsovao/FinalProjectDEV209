@@ -1,15 +1,13 @@
-<<<<<<< HEAD
-# React + Vite
+remember it: You must activated the proxy     cors-anywhere.herokuapp.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Go to the activation page:
+2. https://cors-anywhere.herokuapp.com/corsdemo
+3. Click the "Request temporary access" button.
+4. Your proxy will be active again for 24 hours.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-=======
-# FinalProjectDEV209
-
-Hello World!
->>>>>>> 132ce55868c0235d381d37636e75de469a520e7b
-Hello World New Massages
+Since you are using cors-anywhere.herokuapp.com, manual activation is required every 24 hours.
+Key Details:
+- Activation is tied to your IP address.
+- You must use the same browser (or clear cache & re-activate).
+- The activation lasts for 24 hours, after which you need to manually re-enable it.
