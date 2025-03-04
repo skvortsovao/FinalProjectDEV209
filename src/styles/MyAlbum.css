@@ -20,9 +20,12 @@
 
 .album-item input[type="checkbox"] {
     margin-top: 5px;
+    margin-bottom: 10px; /* ✅ Improves spacing */
+    cursor: pointer;
 }
 
-.delete-button {
+/* ✅ Removed duplicate .delete-button styles */
+.delete-button, .refresh-button {
     background-color: red;
     color: white;
     padding: 10px 15px;
@@ -36,4 +39,17 @@
 
 .delete-button:hover {
     background-color: darkred;
+}
+
+.refresh-button {
+    background-color: #3498db;
+}
+
+.refresh-button:hover {
+    background-color: #2980b9;
+}
+
+.refresh-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
 }

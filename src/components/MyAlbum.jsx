@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import "../styles/MyAlbum.css"; // ✅ Add grid styling
+import "../styles/MyAlbum.css";
 
 const MyAlbum = () => {
     const [photos, setPhotos] = useState([]);
-    const [selectedPhotos, setSelectedPhotos] = useState([]); // ✅ State for checkboxes
+    const [selectedPhotos, setSelectedPhotos] = useState([]); 
+    const [loading, setLoading] = useState(false);
 
-    // ✅ Fetch images from Firestore on mount
-    useEffect(() => {
-        const fetchPhotos = async () => {
-            try {
-                const albumRef = collection(db, "albums");
-                const snapshot = await getDocs(albumRef);
-                
-                if (!snapshot.empty) {
-                    const albumPhotos = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        urls: doc.data().photos || [] // ✅ Get photos array
-                    }));
-                    setPhotos(albumPhotos);
-                }
-            } catch (error) {
-                console.error("❌ Error fetching from Firebase:", error);
+    // ✅ Fetch images from Firestore when "Refresh Photos" is clicked
+    const fetchPhotos = async () => {
+        setLoading(true);
+        try {
+            const albumRef = collection(db, "albums");
+            const snapshot = await getDocs(albumRef);
+
+            if (!snapshot.empty) {
+                const albumPhotos = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    urls: doc.data().photos || [] 
+                }));
+                setPhotos(albumPhotos);
+            } else {
+                setPhotos([]); // ✅ Clear state if no photos exist
             }
-        };
-        fetchPhotos();
-    }, []);
+        } catch (error) {
+            console.error("❌ Error fetching from Firebase:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // ✅ Handle checkbox selection
     const handleCheckboxChange = (photoId, url) => {
         setSelectedPhotos(prevSelected =>
             prevSelected.some(item => item.id === photoId && item.url === url)
@@ -37,13 +39,11 @@ const MyAlbum = () => {
         );
     };
 
-    // ✅ Delete selected images
     const handleDeleteSelected = async () => {
         if (selectedPhotos.length === 0) return;
 
         try {
             for (const { id, url } of selectedPhotos) {
-                // Find the document in Firestore that contains the image
                 const albumRef = doc(db, "albums", id);
                 const albumDoc = await getDocs(collection(db, "albums"));
 
@@ -53,12 +53,11 @@ const MyAlbum = () => {
                     if (updatedPhotos.length > 0) {
                         await updateDoc(albumRef, { photos: updatedPhotos });
                     } else {
-                        await deleteDoc(albumRef); // Delete document if no photos left
+                        await deleteDoc(albumRef); 
                     }
                 }
             }
 
-            // ✅ Update state after deletion
             setPhotos(prevPhotos =>
                 prevPhotos.map(album => ({
                     ...album,
@@ -66,7 +65,7 @@ const MyAlbum = () => {
                 })).filter(album => album.urls.length > 0)
             );
 
-            setSelectedPhotos([]); // ✅ Clear selection after deleting
+            setSelectedPhotos([]); 
             alert("✅ Selected photos deleted!");
         } catch (error) {
             console.error("❌ Error deleting from Firestore:", error);
@@ -77,8 +76,12 @@ const MyAlbum = () => {
     return (
         <div>
             <h2>My Album</h2>
-            
-            {/* ✅ Show Delete Button only if at least one checkbox is checked */}
+
+            {/* ✅ Refresh Button */}
+            <button className="refresh-button" onClick={fetchPhotos} disabled={loading}>
+                {loading ? "Refreshing..." : "Refresh Photos"}
+            </button>
+
             {selectedPhotos.length > 0 && (
                 <button className="delete-button" onClick={handleDeleteSelected}>
                     Delete Selected
@@ -101,7 +104,7 @@ const MyAlbum = () => {
                     )}
                 </div>
             ) : (
-                <p>No pictures saved yet.</p>
+                <p>No pictures saved yet. Click "Refresh Photos" to load images.</p>
             )}
         </div>
     );
