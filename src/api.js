@@ -1,6 +1,6 @@
-const API_KEY = process.env.REACT_APP_API_KEY_ENV;  // My OpenWeather API key
-const GEO_BASE_URL = process.env.REACT_APP_GEO_BASE_URL_ENV; // taking geo coordinates
-const WEATHER_BASE_URL = process.env.REACT_APP_WEATHER_BASE_URL_ENV;;  // Free API
+const API_KEY = "6b1fde950d44075d8b55708174adb5c7";  // My OpenWeather API key
+const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // taking geo coordinates
+const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"; // Free API
 
 
 
@@ -49,8 +49,8 @@ export const getWeather = async (latitude, longitude) => {
 };
 
 
-const GOOGLE_STREET_VIEW_BASE_URL = process.env.REACT_APP_GOOGLE_STREET_VIEW_BASE_URL_ENV;
-const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY_ENV;
+const GOOGLE_STREET_VIEW_BASE_URL = import.meta.env.REACT_APP_GOOGLE_STREET_VIEW_BASE_URL_ENV;
+const GOOGLE_API_KEY = import.meta.env.REACT_APP_GOOGLE_API_KEY_ENV;
 
 /**
  * Get 4 Street View images for a city (Front, Back, Left, Right)
