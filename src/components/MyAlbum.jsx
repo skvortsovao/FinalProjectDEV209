@@ -1,75 +1,115 @@
-import React, { useState } from "react";
-import { db } from "../firebase";
-import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+// Import necessary dependencies
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import "../styles/MyAlbum.css";
 
 const MyAlbum = () => {
+    // State to store fetched photos
     const [photos, setPhotos] = useState([]);
-    const [selectedPhotos, setSelectedPhotos] = useState([]); 
+
+    // State to track selected photos for deletion
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
+
+    // State to manage loading status
     const [loading, setLoading] = useState(false);
 
-    // ✅ Fetch images from Firestore when "Refresh Photos" is clicked
-    const fetchPhotos = async () => {
-        setLoading(true);
-        try {
-            const albumRef = collection(db, "albums");
-            const snapshot = await getDocs(albumRef);
+    // Hook to detect when the user navigates to "My Album"
+    const location = useLocation();
 
-            if (!snapshot.empty) {
-                const albumPhotos = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    urls: doc.data().photos || [] 
-                }));
-                setPhotos(albumPhotos);
-            } else {
-                setPhotos([]); // ✅ Clear state if no photos exist
+    /**
+     * Fetches user photos whenever the component mounts or location changes.
+     */
+    useEffect(() => {
+        if (auth.currentUser) {
+            fetchPhotos(auth.currentUser.uid);
+        } else {
+            console.log("User not authenticated yet.");
+        }
+    }, [location]);
+
+    /**
+     * Fetches all photos for the authenticated user from Firestore.
+     * @param {string} userId - The authenticated user's UID.
+     */
+    const fetchPhotos = async (userId) => {
+        setLoading(true);
+        if (!userId) {
+            console.error("No user logged in!");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            console.log("Fetching albums for user:", userId);
+
+            const albumRef = collection(db, "albums");
+            const albumSnapshot = await getDocs(albumRef);
+
+            let allPhotos = [];
+
+            // Loop through all albums and fetch associated photos
+            for (const albumDoc of albumSnapshot.docs) {
+                const albumId = albumDoc.id;
+                const albumData = albumDoc.data();
+
+                if (albumData.userId === userId) {
+                    console.log("Fetching photos for album:", albumId);
+
+                    const photosRef = collection(db, `albums/${albumId}/photos`);
+                    const photoSnapshot = await getDocs(photosRef);
+
+                    const albumPhotos = photoSnapshot.docs.map(photoDoc => ({
+                        id: photoDoc.id,
+                        imageUrl: photoDoc.data().imageUrl,
+                        albumId: albumId
+                    }));
+
+                    allPhotos = [...allPhotos, ...albumPhotos];
+                }
             }
+
+            setPhotos(allPhotos);
+            console.log("Photos fetched successfully:", allPhotos);
         } catch (error) {
-            console.error("❌ Error fetching from Firebase:", error);
+            console.error("Error fetching from Firestore:", error);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleCheckboxChange = (photoId, url) => {
+    /**
+     * Toggles the selection state of a photo for deletion.
+     * @param {string} photoId - The ID of the selected photo.
+     */
+    const toggleSelection = (photoId) => {
         setSelectedPhotos(prevSelected =>
-            prevSelected.some(item => item.id === photoId && item.url === url)
-                ? prevSelected.filter(item => !(item.id === photoId && item.url === url))
-                : [...prevSelected, { id: photoId, url }]
+            prevSelected.includes(photoId)
+                ? prevSelected.filter(id => id !== photoId)
+                : [...prevSelected, photoId]
         );
     };
 
+    /**
+     * Deletes selected photos from Firestore.
+     */
     const handleDeleteSelected = async () => {
         if (selectedPhotos.length === 0) return;
 
         try {
-            for (const { id, url } of selectedPhotos) {
-                const albumRef = doc(db, "albums", id);
-                const albumDoc = await getDocs(collection(db, "albums"));
-
-                const docData = albumDoc.docs.find(d => d.id === id);
-                if (docData) {
-                    const updatedPhotos = docData.data().photos.filter(photo => photo !== url);
-                    if (updatedPhotos.length > 0) {
-                        await updateDoc(albumRef, { photos: updatedPhotos });
-                    } else {
-                        await deleteDoc(albumRef); 
-                    }
-                }
+            for (const photoId of selectedPhotos) {
+                const photoRef = doc(db, `albums/${photos.find(p => p.id === photoId).albumId}/photos/${photoId}`);
+                await deleteDoc(photoRef);
             }
 
-            setPhotos(prevPhotos =>
-                prevPhotos.map(album => ({
-                    ...album,
-                    urls: album.urls.filter(url => !selectedPhotos.some(item => item.url === url))
-                })).filter(album => album.urls.length > 0)
-            );
-
-            setSelectedPhotos([]); 
-            alert("✅ Selected photos deleted!");
+            // Update state to remove deleted photos from the UI
+            setPhotos(prevPhotos => prevPhotos.filter(photo => !selectedPhotos.includes(photo.id)));
+            setSelectedPhotos([]);
+            alert("Selected photos deleted!");
         } catch (error) {
-            console.error("❌ Error deleting from Firestore:", error);
-            alert("❌ Error deleting selected photos.");
+            console.error("Error deleting from Firestore:", error);
+            alert("Error deleting selected photos.");
         }
     };
 
@@ -77,34 +117,33 @@ const MyAlbum = () => {
         <div>
             <h2>My Album</h2>
 
-            {/* ✅ Refresh Button */}
-            <button className="refresh-button" onClick={fetchPhotos} disabled={loading}>
-                {loading ? "Refreshing..." : "Refresh Photos"}
-            </button>
-
-            {selectedPhotos.length > 0 && (
-                <button className="delete-button" onClick={handleDeleteSelected}>
-                    Delete Selected
+            {/* Always show "Refresh Photos" button */}
+            <div className="button-container">
+                <button className="refresh-button" onClick={() => fetchPhotos(auth.currentUser?.uid)} disabled={loading}>
+                    {loading ? "Refreshing..." : "Refresh Photos"}
                 </button>
-            )}
+                {selectedPhotos.length > 0 && (
+                    <button className="delete-button" onClick={handleDeleteSelected}>
+                        Delete Selected
+                    </button>
+                )}
+            </div>
 
             {photos.length > 0 ? (
                 <div className="album-container">
-                    {photos.map(album =>
-                        album.urls.map((url, index) => (
-                            <div key={index} className="album-item">
-                                <img src={url} alt="Favorite" />
-                                <input
-                                    type="checkbox"
-                                    onChange={() => handleCheckboxChange(album.id, url)}
-                                    checked={selectedPhotos.some(item => item.id === album.id && item.url === url)}
-                                />
-                            </div>
-                        ))
-                    )}
+                    {photos.map(photo => (
+                        <div key={photo.id} className="album-item">
+                            <img src={photo.imageUrl} alt="Favorite" />
+                            <input
+                                type="checkbox"
+                                onChange={() => toggleSelection(photo.id)}
+                                checked={selectedPhotos.includes(photo.id)}
+                            />
+                        </div>
+                    ))}
                 </div>
             ) : (
-                <p>No pictures saved yet. Click "Refresh Photos" to load images.</p>
+                auth.currentUser && <p>No pictures saved yet. Click "Refresh Photos" to load images.</p>
             )}
         </div>
     );
