@@ -143,7 +143,7 @@ const Pictures = ({ city }) => {
             }
 
             console.log("Successfully saved to Firestore:", selectedPhotos);
-            alert("Saved to My Album!");
+            
             navigate("/layout/my-album");
         } catch (error) {
             console.error("Firestore Error:", error.message);
@@ -153,9 +153,13 @@ const Pictures = ({ city }) => {
 
     return (
         <div>
-            <h2>Photos of {city || "No City Selected"}</h2>
+            <h2 class="picturesH2">Photos of {city || "No City Selected"}</h2>
             {loading && <p>Loading photos...</p>}
-
+            {selectedPhotos.length > 0 && (
+                <button className="save-button" onClick={saveToFirebase}>
+                    Save and View My Album
+                </button>
+            )}
             {photos.length > 0 ? (
                 <div className="pictures-container">
                     {photos.map((url, index) => (
@@ -174,11 +178,7 @@ const Pictures = ({ city }) => {
                 !loading && <p>No photos available. Please search for a city.</p>
             )}
 
-            {selectedPhotos.length > 0 && (
-                <button className="save-button" onClick={saveToFirebase}>
-                    Save and View My Album
-                </button>
-            )}
+           
         </div>
     );
 };

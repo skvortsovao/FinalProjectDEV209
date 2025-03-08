@@ -106,7 +106,7 @@ const MyAlbum = () => {
             // Update state to remove deleted photos from the UI
             setPhotos(prevPhotos => prevPhotos.filter(photo => !selectedPhotos.includes(photo.id)));
             setSelectedPhotos([]);
-            alert("Selected photos deleted!");
+            
         } catch (error) {
             console.error("Error deleting from Firestore:", error);
             alert("Error deleting selected photos.");
@@ -115,7 +115,7 @@ const MyAlbum = () => {
 
     return (
         <div>
-            <h2>My Album</h2>
+            <h2 class="albumh2">My Album</h2>
 
             {/* Always show "Refresh Photos" button */}
             <div className="button-container">
