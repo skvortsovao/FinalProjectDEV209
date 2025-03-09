@@ -1,22 +1,14 @@
+/* ✅ Album container - 2 pictures per row on big screens */
 .album-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* ✅ Exactly 2 items per row */
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* 2 pictures per row */
+    gap: 20px; /* Space between items */
     padding: 20px;
     justify-content: center;
 }
-h2{
-    width:300px;
-    margin: 0 auto;
-    text-align: center;
-  color: white;
-  background-color: #181c77;
-  padding:15px;
-  border-radius: 50px;
-}
-/* ✅ Individual album item */
+
+/* ✅ Individual album item styling */
 .album-item {
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,24 +18,26 @@ h2{
     padding: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
-    width: 100%; 
-    max-width: 500px; /* Prevents items from being too large */
+    width: 100%;
+    max-width: 450px; /* Adjusted size to fit 2 per row */
+    box-sizing: border-box; /* Prevents overflow */
 }
 
-/* ✅ Image styling - Larger size */
+/* ✅ Image styling */
 .album-item img {
     width: 100%;
-    height: 350px; /* Bigger images */
+    height: 300px; /* Slightly reduced height */
     object-fit: cover;
     border-radius: 15px;
 }
 
+/* ✅ Checkbox styling */
 .album-item input[type="checkbox"] {
     appearance: none; /* Remove default styles */
     width: 20px;
     height: 20px;
-    border: 2px solid #3498db; /* Blue border */
-    border-radius: 5px; /* Rounded corners */
+    border: 2px solid #3498db;
+    border-radius: 5px;
     background-color: white;
     cursor: pointer;
     position: relative;
@@ -51,13 +45,11 @@ h2{
     margin: 10px 0;
 }
 
-/* Checkmark (when selected) */
+/* ✅ Checkmark effect */
 .album-item input[type="checkbox"]:checked {
-    background-color: #3498db; /* Blue background when checked */
+    background-color: #3498db;
     border-color: #2980b9;
 }
-
-/* Add a checkmark using pseudo-element */
 .album-item input[type="checkbox"]:checked::before {
     content: '✔';
     color: white;
@@ -69,18 +61,7 @@ h2{
     transform: translate(-50%, -50%);
 }
 
-/* Hover effect */
-.album-item input[type="checkbox"]:hover {
-    border-color: #2980b9;
-}
-
-/* Focus outline */
-.album-item input[type="checkbox"]:focus {
-    outline: 2px solid #2980b9;
-    outline-offset: 2px;
-}
-
-/* ✅ Buttons - Better layout */
+/* ✅ Button container styling */
 .button-container {
     display: flex;
     justify-content: center;
@@ -89,6 +70,7 @@ h2{
     flex-wrap: wrap;
 }
 
+/* ✅ Buttons */
 .delete-button, .refresh-button {
     background-color: red;
     color: white;
@@ -116,18 +98,43 @@ h2{
     background-color: gray;
     cursor: not-allowed;
 }
+.albumh2{
+    text-align: center;
+    color: white;
+    background-color: #181c77;
+    padding:5px;
+    border-radius: 50px;
+    width:200px;
+    margin: 0 auto;
 
+}
+/* ✅ Responsive Design Adjustments */
+
+/* 📌 Medium screens (Surface Pro, Tablets, Small Laptops) */
+@media (max-width: 1024px) {
+    .album-container {
+        grid-template-columns: repeat(2, 1fr); /* Keep 2 per row but smaller */
+    }
+    .album-item {
+        max-width: 350px; /* Make items slightly smaller */
+    }
+    .album-item img {
+        height: 250px; /* Reduce image height */
+    }
+}
+
+/* 📌 Small screens (Mobile devices) */
 @media (max-width: 768px) {
     .album-container {
-        grid-template-columns: repeat(1, 1fr); /* Keep 1 item per row */
-        justify-content: center; /* Center the grid */
-        align-items: center; /* Center vertically if needed */
-        display: flex; /* Change grid to flex for better centering */
-        flex-direction: column; /* Stack items */
+        grid-template-columns: repeat(1, 1fr); /* 1 picture per row */
     }
-
     .album-item {
-        width: 100%;
-        max-width: 500px; /* Keep the original size */
+        max-width: 100%; /* Use full width */
     }
+    .album-item img {
+        height: 300px; /* Maintain good size */
+    }
+}
+.noAlbum{
+    color: white;
 }

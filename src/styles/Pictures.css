@@ -83,6 +83,9 @@
   text-align: center;
   color: white;
   background-color: #181c77;
-  padding:15px;
+  padding:5px;
   border-radius: 50px;
+}
+.noCity{
+  color: white;
 }

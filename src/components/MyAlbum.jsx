@@ -143,7 +143,7 @@ const MyAlbum = () => {
                     ))}
                 </div>
             ) : (
-                auth.currentUser && <p>No pictures saved yet. Click "Refresh Photos" to load images.</p>
+                auth.currentUser && <p class="noAlbum">No pictures saved yet. Click "Refresh Photos" to load images.</p>
             )}
         </div>
     );

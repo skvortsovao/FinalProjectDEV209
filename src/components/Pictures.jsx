@@ -175,7 +175,7 @@ const Pictures = ({ city }) => {
                     ))}
                 </div>
             ) : (
-                !loading && <p>No photos available. Please search for a city.</p>
+                !loading && <p class="noCity">No photos available. Please search for a city.</p>
             )}
 
            
