@@ -188,8 +188,8 @@ const Pictures = ({ city }) => {
                     <button className="save-button" onClick={saveToFirebase}>
                         Save to Album
                     </button>
-                    <button className="save-button2" onClick={saveToLocal}>
-                    Show FullSize
+                    <button className="save-button1" onClick={saveToLocal}>
+                    Show full size
                     </button>
                 </div>
             )}
@@ -203,7 +203,7 @@ const Pictures = ({ city }) => {
                                 className={`favorite-button ${selectedPhotos.includes(url) ? "active" : ""}`}
                                 onClick={() => toggleSelection(url)}
                             >
-                                <span className="city-name">{city}</span>
+                                
                                 <span className="star-icon">★</span>
                             </button>
                         </div>
