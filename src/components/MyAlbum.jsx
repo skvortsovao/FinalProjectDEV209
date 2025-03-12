@@ -63,6 +63,7 @@ const MyAlbum = () => {
                     const albumPhotos = photoSnapshot.docs.map(photoDoc => ({
                         id: photoDoc.id,
                         imageUrl: photoDoc.data().imageUrl,
+                        city: photoDoc.data().city || "Unknown City", 
                         albumId: albumId
                     }));
 
@@ -115,7 +116,7 @@ const MyAlbum = () => {
 
     return (
         <div>
-            <h2 class="albumh2">My Album</h2>
+            <h2 className="albumh2">My Album</h2>
 
             {/* Always show "Refresh Photos" button */}
             <div className="button-container">
@@ -134,16 +135,19 @@ const MyAlbum = () => {
                     {photos.map(photo => (
                         <div key={photo.id} className="album-item">
                             <img src={photo.imageUrl} alt="Favorite" />
+                            <span className="photo-city">{photo.city}</span> {/* Display City Name */}
                             <input
                                 type="checkbox"
                                 onChange={() => toggleSelection(photo.id)}
                                 checked={selectedPhotos.includes(photo.id)}
+                                
                             />
                         </div>
+                        
                     ))}
                 </div>
             ) : (
-                auth.currentUser && <p class="noAlbum">No pictures saved yet. Click "Refresh Photos" to load images.</p>
+                auth.currentUser && <p className="noAlbum">No pictures saved yet. Click "Refresh Photos" to load images.</p>
             )}
         </div>
     );

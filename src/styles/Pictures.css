@@ -34,16 +34,39 @@
   background: rgba(255, 255, 255, 0.2); /* ✅ Transparent image background */
 }
 
-/* ✅ Star button */
 .favorite-button {
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px; /* Space between text and star */
+  width: 100%;
   background: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 18px;
   cursor: pointer;
   transition: color 0.3s;
   font-family: cursive;
-  justify-content: end;
+  padding: 5px 10px;
+}
+
+/* City name styling */
+.city-name {
+  color: gray; /* Default text color */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Star icon default styling */
+.star-icon {
+  color: gray; /* Default star color */
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+/* When photo is selected, only the star turns gold */
+.favorite-button.active .star-icon {
+  color: gold;
+
 }
 
 
@@ -53,10 +76,10 @@
 }
 
 /* ✅ Selected (favorite) star */
-.favorite-button.active {
-  color: gold;
-  width:50px;
-}
+/* .favorite-button.active { */
+  /* color: gold; */
+  /* width:50px; */
+/* } */
 
 /* ✅ Small text below the star */
 .favorite-text {
@@ -79,6 +102,19 @@
   border-radius: 5px;
 }
 
+
+.save-button2 {
+  display: block; /* Ensures it respects margin auto */
+  margin: 20px auto; /* Centers horizontally */
+  background-color: #ffffff;
+  color: #771b18;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
 .picturesH2{
   text-align: center;
   color: white;
@@ -88,4 +124,26 @@
 }
 .noCity{
   color: white;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.download-button:hover {
+  background-color: #45a049;
 }

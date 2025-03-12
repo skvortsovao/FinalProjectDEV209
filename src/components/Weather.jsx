@@ -1,7 +1,14 @@
 // Import necessary dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { getWeather, getCoordinates } from "../api";
 import "../styles/Weather.css"; 
+
+import cloudySound from "/public/sound/windy.mp3";
+import rainSound from "/public/sound/rain.mp3";
+import sunnySound from "/public/sound/summer.mp3";
+import snowSound from "/public/sound/thunderstorm.mp3";
+
 
 const Weather = ({ setSelectedCity }) => {
   // State to store the city name entered by the user
@@ -12,6 +19,9 @@ const Weather = ({ setSelectedCity }) => {
 
   // State to store error messages if the request fails
   const [error, setError] = useState(null);
+  
+  const audioRef = useRef(null); // Reference for audio playback
+
 
   /**
    * Handles fetching weather data when the user clicks "Get Weather".
@@ -64,6 +74,33 @@ const Weather = ({ setSelectedCity }) => {
     return "/default.jpg";
   };
 
+  // Determine background sound based on weather condition
+const getBackgroundSound = () => {
+    if (!weatherData) return null;
+
+    const condition = weatherData.weather[0].main.toLowerCase();
+
+    if (condition.includes("cloud")) return cloudySound;
+    if (condition.includes("rain")) return rainSound;
+    if (condition.includes("clear")) return sunnySound;
+    if (condition.includes("snow")) return snowSound;
+
+    return null;   
+};
+
+// Update background image and sound when weather changes
+useEffect(() => {
+  document.body.style.backgroundImage = `url(${getBackgroundImage()})`;
+
+  const soundFile = getBackgroundSound();
+
+  if (soundFile && audioRef.current) {
+    audioRef.current.src = soundFile;
+    audioRef.current.play().catch((err) => console.error("Audio playback error:", err));
+  }
+}, [weatherData]);
+
+
   /**
    * Updates the background image whenever weather data changes.
    */
@@ -102,8 +139,14 @@ const Weather = ({ setSelectedCity }) => {
           />
         </div>
       )}
+      {/* Background audio element */}
+      <audio ref={audioRef} loop />
     </div>
   );
 };
+Weather.propTypes = {
+  setSelectedCity: PropTypes.func.isRequired,
+};
 
 export default Weather;
+

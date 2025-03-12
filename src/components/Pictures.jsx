@@ -1,8 +1,7 @@
-// Import necessary dependencies
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom"; 
-import { auth, db } from "../firebase"; 
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import "../styles/Pictures.css";
 
@@ -12,16 +11,13 @@ const CORS_PROXY = "https://api.allorigins.win/get?url=";
 
 const Pictures = ({ city }) => {
     // State for storing fetched photos
-    const [photos, setPhotos] = useState([]); 
-
+    const [photos, setPhotos] = useState([]);
     // State for tracking loading status
     const [loading, setLoading] = useState(false);
-
     // State for storing selected photos before saving
-    const [selectedPhotos, setSelectedPhotos] = useState([]); 
-
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
     // Hook for navigation after saving
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     /**
      * Fetches city photos using Google Places API when the `city` prop changes.
@@ -89,7 +85,7 @@ const Pictures = ({ city }) => {
      */
     const toggleSelection = (url) => {
         setSelectedPhotos((prev) =>
-            prev.includes(url) ? prev.filter((photo) => photo !== url) : [...prev, url] 
+            prev.includes(url) ? prev.filter((photo) => photo !== url) : [...prev, url]
         );
     };
 
@@ -126,8 +122,8 @@ const Pictures = ({ city }) => {
                 console.log("Existing Album Found: ", albumId);
             } else {
                 // Create a new album if one does not exist
-                const newAlbum = await addDoc(albumRef, { 
-                    userId: user.uid, 
+                const newAlbum = await addDoc(albumRef, {
+                    userId: user.uid,
                     createdAt: new Date().toISOString()
                 });
                 albumId = newAlbum.id;
@@ -139,11 +135,12 @@ const Pictures = ({ city }) => {
                 await addDoc(collection(db, `albums/${albumId}/photos`), {
                     imageUrl: photoUrl,
                     uploadedAt: new Date().toISOString(),
+                    city: city // add city
                 });
             }
 
             console.log("Successfully saved to Firestore:", selectedPhotos);
-            
+
             navigate("/layout/my-album");
         } catch (error) {
             console.error("Firestore Error:", error.message);
@@ -151,15 +148,52 @@ const Pictures = ({ city }) => {
         }
     };
 
+    /**
+     * Saves selected photos to the user's local storage without closing the page.
+     */
+      
+    const saveToLocal = () => {
+        if (selectedPhotos.length === 0) {
+            alert("No pictures selected!");
+            return;
+        }
+    
+        selectedPhotos.forEach((photoUrl) => {
+            // Modify URL to request high-resolution image
+            const fullSizeUrl = photoUrl.replace("maxwidth=400", "maxwidth=1600");
+    
+            console.log("Opening full-size image:", fullSizeUrl);
+    
+            // Create an invisible <a> element and trigger a click
+            const link = document.createElement("a");
+            link.href = fullSizeUrl;
+            link.target = "_blank"; // Open in new tab
+            link.rel = "noopener noreferrer"; // Prevent security issues
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    
+        console.log("Full-size photos opened in new tabs:", selectedPhotos);
+    };                      
+                                                                                                  
     return (
         <div>
-            <h2 class="picturesH2">Photos of {city || "No City Selected"}</h2>
+            <h2 className="picturesH2">Photos of {city || "No City Selected"}</h2>
+
             {loading && <p>Loading photos...</p>}
+
             {selectedPhotos.length > 0 && (
-                <button className="save-button" onClick={saveToFirebase}>
-                    Save and View My Album
-                </button>
+                <div className="button-group">
+                    <button className="save-button" onClick={saveToFirebase}>
+                        Save to Album
+                    </button>
+                    <button className="save-button2" onClick={saveToLocal}>
+                    Show FullSize
+                    </button>
+                </div>
             )}
+
             {photos.length > 0 ? (
                 <div className="pictures-container">
                     {photos.map((url, index) => (
@@ -169,16 +203,15 @@ const Pictures = ({ city }) => {
                                 className={`favorite-button ${selectedPhotos.includes(url) ? "active" : ""}`}
                                 onClick={() => toggleSelection(url)}
                             >
-                                ★
+                                <span className="city-name">{city}</span>
+                                <span className="star-icon">★</span>
                             </button>
                         </div>
                     ))}
                 </div>
             ) : (
-                !loading && <p class="noCity">No photos available. Please search for a city.</p>
+                !loading && <p className="noCity">No photos available. Please search for a city.</p>
             )}
-
-           
         </div>
     );
 };
