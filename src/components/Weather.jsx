@@ -121,6 +121,7 @@ useEffect(() => {
         <button onClick={handleFetchWeather}>Get Weather</button>
       </div>
 
+                         
       {/* Display error message if any */}
       {error && <p className="error-message">{error}</p>}
 

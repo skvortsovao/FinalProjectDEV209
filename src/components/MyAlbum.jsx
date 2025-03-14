@@ -70,6 +70,8 @@ const MyAlbum = () => {
                     allPhotos = [...allPhotos, ...albumPhotos];
                 }
             }
+            
+
 
             setPhotos(allPhotos);
             console.log("Photos fetched successfully:", allPhotos);
@@ -80,6 +82,11 @@ const MyAlbum = () => {
         }
     };
 
+    const sortPhotos = () => {
+        setPhotos((photos) =>
+            [...photos].sort((a, b) => a.city.localeCompare(b.city))
+        );
+    };
     /**
      * Toggles the selection state of a photo for deletion.
      * @param {string} photoId - The ID of the selected photo.
@@ -123,6 +130,12 @@ const MyAlbum = () => {
                 <button className="refresh-button" onClick={() => fetchPhotos(auth.currentUser?.uid)} disabled={loading}>
                     {loading ? "Refreshing..." : "Refresh Photos"}
                 </button>
+
+                <button
+                 className="refresh-button" onClick={sortPhotos} disabled={photos.length === 0}>
+                    Sort Alphabetically
+                </button>
+
                 {selectedPhotos.length > 0 && (
                     <button className="delete-button" onClick={handleDeleteSelected}>
                         Delete Selected
