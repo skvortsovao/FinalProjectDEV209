@@ -18,7 +18,7 @@
   background: rgba(255, 255, 255, 0.3); /* Adds transparency */
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: cursive;
+  
   backdrop-filter: blur(8px); /* Adds a blurred background effect */
   position: relative;
 }
@@ -40,7 +40,7 @@
   font-size: 24px;
   cursor: pointer;
   transition: color 0.3s;
-  font-family: cursive;
+  
   justify-content: end;
 }
 
@@ -59,7 +59,7 @@
 .favorite-text {
   font-size: 12px;
   color: #333;
-  font-family: cursive;
+  
   margin-top: 5px;
   text-align: center;
   opacity: 0.8;
