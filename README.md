@@ -1,44 +1,102 @@
-remember it: You must activated the proxy     cors-anywhere.herokuapp.com
+Tempix – Your Global Weather, City & Music Explorer
 
-1. Go to the activation page:
-2. https://cors-anywhere.herokuapp.com/corsdemo
-3. Click the "Request temporary access" button.
-4. Your proxy will be active again for 24 hours.
+===========================================================================================
+was made by Oleksandra Skvortsova and Henadzi(Henry) Kirykovich for the DEV209's class
+===========================================================================================
 
+Tempix is a modern, feature-rich weather application that provides real-time weather updates for any location worldwide, including famous cities. In addition to weather forecasts, Tempix enhances your experience with:
 
-Since you are using cors-anywhere.herokuapp.com, manual activation is required every 24 hours.
-Key Details:
-- Activation is tied to your IP address.
-- You must use the same browser (or clear cache & re-activate).
-- The activation lasts for 24 hours, after which you need to manually re-enable it.
-
+Stunning images of selected cities
+Music that adapts to the current weather and season
+Google Authentication for personalized access
+Google Autocomplete for easy location search
 
 
+- Check the working app: [Tempix Live](https://templix.tech/)
+- Download the source code: [GitHub Repository](https://github.com/skvortsovao/FinalProjectDEV209)
 
-1. Overview
-The proposed system is a multi-page React web application designed to facilitate user authentication, weather data retrieval, and favorite city management. It is a small prototype accessible on multiple platforms using any modern web browser. The application is fully responsive, supporting mobile (320px), tablet (768px), and desktop (1024px+) resolutions. It provides an interactive and engaging user experience for checking the weather and enjoying city views.
-The application integrates APIs for weather forecasting and image retrieval, ensuring a dynamic and responsive user interface. Users can search for weather information, view city images, and manage a list of favorite locations. The project showcases best practices in modern web development, including authentication workflows, API integration, and responsive UI design.
+============================================================================================
+Key's Features
 
-2. Core Features
-Authentication Module: Implements secure user authentication via Firebase, ensuring access control and session management.
-Weather Search Module: Allows users to input a city name, retrieve weather data from the Meteomatics API, and display a corresponding city image via the Google Images API.
-Pictures Search Module: Allow users to find the pictures from the city that corresponds to input of user on the route with weather look up.
-Favorites Management Module: Enables users to store, view, and remove favorite cities for quick access.
-Information Module: Displays project details, technical stack, and system architecture for user reference.
+1. Global Weather Tracking – Get real-time weather data for any city worldwide
+2. Famous Cities Support – Quickly check weather conditions in the most popular travel destinations
+3. City Images – View high-quality images of the searched city
+4. Music Based on Weather & Season – Listen to background music that matches the current climate
+5. Save Favorite Images – Keep and revisit your most loved city pictures
+6. Google Authentication – Secure login via Google API
+7. Google Autocomplete – Easily search for locations with Google Places API
+7. CORS Proxy for API Requests – Bypass CORS issues with cors-anywhere.herokuapp.com
+8. Deployed on AWS EC2 – High-performance cloud deployment
 
-3. Technical Specifications
-Frontend Architecture: Developed using React.js, leveraging React Router for seamless multi-page navigation.
-Semantic HTML5: Utilizes ARIA-compliant markup for enhanced accessibility and structural clarity.
-Responsive UI: Implements CSS Grid and Flexbox for adaptive layout across various screen resolutions.
-API Integration: Supports asynchronous data retrieval with loading states and error handling.
-State Management: Utilizes React Hooks and Context API for efficient global state handling.
-Security Measures: Ensures authentication security via Firebase and proper session validation.
+===========================================================================================
 
-4. Expected Outcome
-The system will provide an intuitive, high-performance interface for weather data retrieval and favorite city management. Designed as an interactive, entertaining, and engaging application, it will be accessible across multiple platforms via modern web browsers. The system will implement best practices in:
-React development: Ensuring modular and maintainable code structure.
-Authentication workflows: Secure and efficient user access control.
-API integration: Reliable data retrieval with error handling.
-Responsive UI design: Optimal usability across different devices.
-Accessibility compliance: Ensuring usability for all users.
-By integrating these technologies and design principles, the Tempix application will deliver a seamless and enjoyable user experience.
+Tech Stack
+
+- Frontend: React.js
+- Backend: Firebase
+- Weather Data: OpenWeather API
+- Images & Places: Google Places API, Google Photos API
+- Music Background: audio based on current weather and season
+- Authentication: Google OAuth API
+- UI Styling: CSS
+- Proxy to Bypass CORS: https://cors-anywhere.herokuapp.com/
+- Deployment: AWS EC2
+
+===========================================================================================
+Installation, using prog
+
+1. Clone the Repository
+git clone https://github.com/skvortsovao/FinalProjectDEV209.git
+
+cd /yourPath/FinalProjectDEV209
+
+
+2. Install Dependencies
+
+npm install
+
+
+3. Set Up your API Keys
+
+Create a .env file in the root folder and add your API keys:
+
+VITE_OPENWEATHER_API_KEY=your_openweather_key 
+
+VITE_GOOGLE_API_KEY=your_google_auth_key
+
+VITE_APP_FIREBASE_API_KEY=your_Firebase_auth_key
+VITE_APP_FIREBASE_AUTH_DOMAIN=from your Firebase
+VITE_APP_FIREBASE_PROJECT_ID=from your Firebase
+VITE_APP_FIREBASE_STORAGE_BUCKET=from your Firebase
+VITE_APP_FIREBASE_MESSAGING_SENDER_ID=from your Firebase
+VITE_APP_FIREBASE_APP_ID=from your Firebase
+
+
+4. Run the App Locally
+
+    npm run dev
+
+The app will open at http://localhost:5173 (by default but possible change port)
+
+
+5. To make it more precise put the city's name, comma, 2-letter country code (ISO3166). 
+You will get all proper cities in chosen country. 
+The order is important - the first is city name then comma then country. Example - London, GB or New York, US.
+
+===========================================================================================
+Live Demo
+
+Try it out: https://templix.tech/
+===========================================================================================
+License
+This project is licensed under the MIT License.
+===========================================================================================
+Current Limitations
+
+Google API Restrictions
+
+If the proxy is down, Google API requests may fail.
+Switching to corsproxy.io or setting up a backend proxy is recommended.
+OpenWeather API updates data every few minutes, so real-time data may not always be 100% accurate.
+
+==============================================================================================

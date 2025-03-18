@@ -1,40 +1,38 @@
-/* Pictures.css */
-
-/* ✅ Grid container for images */
+/* Grid container for images */
 .pictures-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Creates a flexible grid */
   gap: 15px;
   padding: 20px;
   justify-content: center;
   align-items: center;
 }
 
-/* ✅ Individual picture container */
+/* Individual picture container */
 .picture-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.3); /* ✅ Transparent background */
+  background: rgba(255, 255, 255, 0.3); /* Adds transparency */
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: cursive;
-  backdrop-filter: blur(8px); /* ✅ Glass effect */
+  backdrop-filter: blur(8px); /* Adds a blurred background effect */
   position: relative;
 }
 
-/* ✅ Image styling */
+/* Image styling */
 .picture-item img {
   width: 100%;
   height: 250px;
   object-fit: cover;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2); /* ✅ Transparent image background */
+  background: rgba(255, 255, 255, 0.2); /* Sets a light background */
 }
 
-/* ✅ Star button */
+/* Star button */
 .favorite-button {
   margin-top: 10px;
   background: transparent;
@@ -46,30 +44,31 @@
   justify-content: end;
 }
 
-
-/* ✅ Unselected star */
+/* Default star color */
 .favorite-button {
   color: gray;
 }
 
-/* ✅ Selected (favorite) star */
+/* Active state for favorite button */
 .favorite-button.active {
   color: gold;
-  width:50px;
+  width: 50px;
 }
 
-/* ✅ Small text below the star */
+/* Text below the star */
 .favorite-text {
   font-size: 12px;
   color: #333;
   font-family: cursive;
   margin-top: 5px;
   text-align: center;
-  opacity: 0.8; /* ✅ Slight transparency */
+  opacity: 0.8;
 }
+
+/* Save button styling */
 .save-button {
-  display: block; /* Ensures it respects margin auto */
-  margin: 20px auto; /* Centers horizontally */
+  display: block;
+  margin: 20px auto;
   background-color: #ffffff;
   color: #181c77;
   padding: 10px 20px;
@@ -78,9 +77,11 @@
   font-size: 16px;
   border-radius: 5px;
 }
-.save-button1{
-  display: block; /* Ensures it respects margin auto */
-  margin: 20px auto; /* Centers horizontally */
+
+/* Alternative save button styling */
+.save-button1 {
+  display: block;
+  margin: 20px auto;
   background-color: #ffffff;
   color: #181c77;
   padding: 10px 20px;
@@ -89,13 +90,17 @@
   font-size: 16px;
   border-radius: 5px;
 }
-.picturesH2{
+
+/* Styling for section heading */
+.picturesH2 {
   text-align: center;
   color: white;
   background-color: #181c77;
-  padding:5px;
+  padding: 5px;
   border-radius: 50px;
 }
-.noCity{
+
+/* Styling for empty city message */
+.noCity {
   color: white;
 }

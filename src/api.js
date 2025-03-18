@@ -2,16 +2,19 @@
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;  
 
 // Base URLs for OpenWeather API endpoints
-const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // Geocoding API to get city coordinates
-const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"; // Weather API to get weather data
+const GEO_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct"; // Geocoding API to get city coordinates (from https://openweathermap.org/api/geocoding-api)
+
+const WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"; // Weather API to get weather data (from official site https://openweathermap.org/current)
 
 /**
  * Fetches latitude and longitude for a given city name using the OpenWeather Geocoding API.
  * @param {string} city - The name of the city to search for.
  * @returns {Promise<{lat: number, lon: number} | null>} - Coordinates or null if an error occurs.
  */
-export const getCoordinates = async (city) => {
-    const endpoint = `${GEO_BASE_URL}?q=${city}&limit=1&appid=${API_KEY}`;
+// (Inline Named Export)
+
+export const getCoordinates = async (city) => {         
+    const endpoint = `${GEO_BASE_URL}?q=${city}&limit=1&appid=${API_KEY}`; // 1. declaring endpoint by var 
 
     try {
         console.log(`Fetching coordinates for city: ${city}`); 
@@ -20,7 +23,10 @@ export const getCoordinates = async (city) => {
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error(`Failed to fetch coordinates: ${response.status}`);
 
-        const data = await response.json();
+        const data = await response.json();    // response.json() is a function that converts a JSON response into JavaScript data (Object or Array).
+        
+        
+        
         console.log("Geocoding API response:", data);  
 
         // If no data is found, return an error
@@ -34,6 +40,7 @@ export const getCoordinates = async (city) => {
         console.error("Error getting coordinates:", error);
         return null;
     }
+
 };
 
 /**

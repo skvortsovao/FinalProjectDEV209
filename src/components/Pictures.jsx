@@ -7,6 +7,7 @@ import "../styles/Pictures.css";
 
 // Google Places API configuration
 const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+
 const CORS_PROXY = "https://api.allorigins.win/get?url=";
 
 const Pictures = ({ city }) => {

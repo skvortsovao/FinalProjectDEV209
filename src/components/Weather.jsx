@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { getWeather, getCoordinates } from "../api";
+import PropTypes from "prop-types";  // Check // This defines the expected types for the Weather component's props 
+import { getWeather, getCoordinates } from "../api"; //  Functions from api.js to fetch weather data.
 import "../styles/Weather.css"; 
 
 import cloudySound from "/public/sound/windy.mp3";
@@ -146,7 +146,7 @@ useEffect(() => {
   );
 };
 Weather.propTypes = {
-  setSelectedCity: PropTypes.func.isRequired,
+  setSelectedCity: PropTypes.func.isRequired, // part of PropTypes checking what was pass inside function
 };
 
 export default Weather;
