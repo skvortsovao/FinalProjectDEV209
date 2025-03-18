@@ -1,13 +1,13 @@
 
 body {
   transition: background-image 1s ease-in-out;
-  font-family: cursive;
+  
   margin: 0;
   padding: 0;
 }
 
 .weather-container {
-  font-family: cursive;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,7 @@ body {
 }
 
 .input-group button {
-  font-family: cursive;
+ 
   padding: 10px 20px;
   border-radius: 5px;
   background-color: rgb(33, 33, 193);
@@ -52,7 +52,7 @@ body {
 .weather-info {
   width: 90%;
   max-width: 450px;
-  font-family: cursive;
+  
   font-size: 20px;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.8);
