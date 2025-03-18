@@ -90,7 +90,7 @@ const getBackgroundSound = () => {
 
 // Update background image and sound when weather changes
 useEffect(() => {
-  document.body.style.backgroundImage = `url(${getBackgroundImage()})`;
+  document.body.style.backgroundImage = `url(${getBackgroundImage()})`; // changing background use Direct DOM Style Manipulation".
 
   const soundFile = getBackgroundSound();
 
