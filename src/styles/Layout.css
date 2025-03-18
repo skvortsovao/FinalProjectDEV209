@@ -1,6 +1,6 @@
 body {
   overflow-x: hidden;
-  font-family: cursive;
+  
   margin: 0;
   padding: 0;
 }
@@ -22,7 +22,7 @@ body {
 }
 
 .logout-btn {
-  font-family: cursive;
+ 
   background-color: rgb(33, 33, 193);
   width: 150px;
   position: absolute;
