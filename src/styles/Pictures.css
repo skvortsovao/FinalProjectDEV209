@@ -1,3 +1,6 @@
+*{
+  font-family: "Quicksand", sans-serif;
+}
 /* Grid container for images */
 .pictures-container {
   display: grid;
