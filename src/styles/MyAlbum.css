@@ -1,3 +1,6 @@
+*{
+    font-family: "Quicksand", sans-serif;
+  }
 /* Album container - 2 pictures per row on big screens */
 .album-container {
     display: grid;
