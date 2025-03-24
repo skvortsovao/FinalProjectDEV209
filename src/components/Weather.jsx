@@ -123,10 +123,10 @@ useEffect(() => {
 
                          
       {/* Display error message if any */}
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message">{error}</p>}    {/*This is a conditional rendering technique in React - only displays the error message if error is not null or false */}
 
-      {/* Display weather data if available */}
-      {weatherData && weatherData.main && (
+      {/* Display weather data if available */} {/*weatherData.main is a property in the OpenWeather API response that contains temperature-related data. The condition weatherData && weatherData.main && (...) ensures the app doesn’t crash if weatherData is null or undefined */}
+      {weatherData && weatherData.main && (       
         <div className="weather-info">
           <h3>Weather in {weatherData.name}</h3>
           <p><strong>Temperature:</strong> {weatherData.main.temp}°F</p>

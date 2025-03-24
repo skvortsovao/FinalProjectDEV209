@@ -35,6 +35,7 @@ const Pictures = ({ city }) => {
                 const PLACE_ID_URL = `${CORS_PROXY}${encodeURIComponent(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${city}&types=(cities)&key=${GOOGLE_API_KEY}`)}`;
                 const placeResponse = await fetch(PLACE_ID_URL);
                 if (!placeResponse.ok) throw new Error("Failed to fetch place ID");
+                
 
                 const placeDataRaw = await placeResponse.json();
                 const placeData = JSON.parse(placeDataRaw.contents);

@@ -13,7 +13,7 @@ Google Autocomplete for easy location search
 
 
 - Check the working app: [Tempix Live](https://templix.tech/)
-- Download the source code: [GitHub Repository](https://github.com/skvortsovao/FinalProjectDEV209)
+
 
 ============================================================================================
 Key's Features

@@ -80,7 +80,7 @@ const Signin = () => {
             {/* Authentication form */}
             <div className="form-container">
                 <form onSubmit={handleAuth}>
-                    <h1>{isSignUp ? 'Sign Up' : 'Sign In'}</h1>
+                    <h1>{isSignUp ? 'Sign Up' : 'Sign In'}</h1>   {/* changing the name of Form  when change isSignUP */}
                     <input ref={emailRef} type="email" placeholder="Email" required />
                     <input ref={passwordRef} type="password" placeholder="Password" required />
                     <button type="submit">{isSignUp ? 'Sign Up' : 'Sign In'}</button>
